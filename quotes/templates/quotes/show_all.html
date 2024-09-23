@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'quotes/base.html' %}
 {% load static %}
 
 {% block title %}All Quotes{% endblock %}
@@ -9,7 +9,7 @@
         {% for quote, image in quotes_with_images %}
             <li>
                 <p>{{ quote }}</p>
-                <img src="{{ image }}" alt="Image related to the quote" width="200">
+                <img src="{% static 'quotes/' %}{{ image }}" alt="Image related to the quote" width="200">
             </li>
         {% endfor %}
     </ul>

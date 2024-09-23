@@ -13,6 +13,7 @@
         <nav>
             <ul>
                 <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'quote' %}">Quote</a></li>
                 <li><a href="{% url 'show_all' %}">Show All</a></li>
                 <li><a href="{% url 'about' %}">About</a></li>
             </ul>
@@ -22,11 +23,11 @@
     <main>
         {% block content %}
         {% if show %}
-        <h1>Today's quote</h1>
+        <h1>Today's Quote</h1>
         <blockquote>
             <p>{{ quote }}</p>
         </blockquote>
-        <img src="{{ image }}" alt="Image related to the quote" width="300">
+        <img src="{% static 'quotes/' %}{{ image }}" alt="Image related to the quote" width="300">
         {% endif %}
         {% endblock %}
     </main>

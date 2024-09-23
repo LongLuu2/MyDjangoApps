@@ -1,0 +1,14 @@
+{% extends 'quotes/base.html' %}
+{% load static %}
+
+{% block title %}All Quotes{% endblock %}
+
+{% block content %}
+    <h1>Here is a Quote!</h1>
+    <ul>
+            <li>
+                <p>{{ quote }}</p>
+                <img src="{% static 'quotes/' %}{{ image }}" alt="Image related to the quote" width="200">
+            </li>
+    </ul>
+{% endblock %}

@@ -1,11 +1,10 @@
-{% extends 'base.html' %}
+{% extends 'quotes/base.html' %}
 
 {% block content %}
     <h1>About {{ name }}</h1>
     <p>
         {{ biography }}
     </p>
-    
     <h2>Key Achievements</h2>
     <ul>
         {% for achievement in achievements %}
@@ -15,6 +14,7 @@
     <h2> About Creator of this site</h2>
     <p>
         {{ me }}
-    </p>
+    </p><br>
+    <a href="https://cs-people.bu.edu/longluu2/cs412/Assign1/index.html" >About me</a>
 
 {% endblock %}

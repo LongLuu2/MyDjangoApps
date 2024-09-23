@@ -1,8 +1,9 @@
 from django.shortcuts import render
 import random
-# Create your views here.
-# views.py
 
+# Create your views here.
+
+# A list of quotes
 quotes = [
     "Don't tell me what you value. Show me your budget, and I'll tell you what you value.- Joe Biden",
     "Anyone who can throw a punch and take a punch, that’s a Biden. - Joe Biden",
@@ -10,10 +11,18 @@ quotes = [
 ]
 
 images = [
-    "/static/joe1.png",
-    "/static/joe2.png",
-    "/static/joe3.png"
+    "joe1.png",
+    "joe2.png",
+    "joe3.png"
 ]
+
+def home(request):
+    context = {
+        'quote': quotes[1], 
+        'image': images[1],  
+        'show': True   
+    }
+    return render(request, 'quotes/base.html', context)
 
 def quote(request):
     selected_quote = random.choice(quotes)
@@ -21,19 +30,21 @@ def quote(request):
     
     context = {
         'quote': selected_quote,
-        'image': selected_image,
-        'show': True
+        'image': selected_image,  
+        'show': False  
     }
     
-    return render(request, 'base.html', context)
+    return render(request, 'quotes/quote.html', context)
+
 
 def show_all(request):
     quotes_with_images = zip(quotes, images)
     context = {
         'quotes_with_images': quotes_with_images,
-        'show': False,
+        'show': False,  
     }
-    return render(request, 'show_all.html', context)
+    return render(request, 'quotes/show_all.html', context)
+
 
 def about(request):
     context = {
@@ -50,10 +61,10 @@ def about(request):
             "Served as Vice President of the United States from 2009 to 2017",
             "Played a key role in passing the Affordable Care Act",
         ],
-        'me' : """
+        'me': """
             A BU Computer Science Major created this site.
-            Link to About page: https://cs-people.bu.edu/longluu2/cs412/Assign1/index.html
+            Link to About page: 
         """,
-        'show': False,
+        'show': False,  
     }
-    return render(request, 'about.html', context)
+    return render(request, 'quotes/about.html', context)
