@@ -3,7 +3,6 @@ import random
 
 # Create your views here.
 
-# A list of quotes
 quotes = [
     "Don't tell me what you value. Show me your budget, and I'll tell you what you value.- Joe Biden",
     "Anyone who can throw a punch and take a punch, that’s a Biden. - Joe Biden",
