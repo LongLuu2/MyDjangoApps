@@ -10,9 +10,9 @@ quotes = [
 ]
 
 images = [
-    "joe1.png",
-    "joe2.png",
-    "joe3.png"
+    "Joe1.png",
+    "Joe2.png",
+    "Joe3.png"
 ]
 
 def home(request):
@@ -47,19 +47,13 @@ def show_all(request):
 
 def about(request):
     context = {
-        'name': "Joe Biden",
-        'biography': """
+        'bio': """
             Joe Biden is the 46th and current president of the United States. Prior to his presidency, he served as 
             the 47th vice president of the United States from 2009 to 2017 under President Barack Obama. Biden 
             also represented Delaware in the U.S. Senate from 1973 to 2009. He has been involved in American 
             politics for over five decades, making significant contributions to various legislations, and advocating 
             for issues such as healthcare reform, environmental protection, and economic recovery.
         """,
-        'achievements': [
-            "Elected as the 46th President of the United States in 2020",
-            "Served as Vice President of the United States from 2009 to 2017",
-            "Played a key role in passing the Affordable Care Act",
-        ],
         'me': """
             A BU Computer Science Major created this site.
             Link to About page: 
