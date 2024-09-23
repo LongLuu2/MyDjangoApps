@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "quotes",
 ]
 
 MIDDLEWARE = [
@@ -114,4 +115,9 @@ STATIC_URL = "static/"
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+# Define the directory where media files are located
+STATICFILES_DIRS = [BASE_DIR / 'quotes' / 'static',]
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

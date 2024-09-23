@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>About {{ name }}</h1>
+    <p>
+        {{ biography }}
+    </p>
+    
+    <h2>Key Achievements</h2>
+    <ul>
+        {% for achievement in achievements %}
+            <li>{{ achievement }}</li>
+        {% endfor %}
+    </ul><br>
+    <h2> About Creator of this site</h2>
+    <p>
+        {{ me }}
+    </p>
+
+{% endblock %}
