@@ -1,0 +1,20 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Restaurant{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'restaurant/styles.css' %}">
+</head>
+<body>
+    <h1>The Pho King Restaurant</h1>
+    <p>A very good pho king restaurant</p>
+    <nav>
+        <a href="{% url 'main' %}">Main</a> |
+        <a href="{% url 'order' %}">Order</a>
+    </nav>
+    <hr>
+    {% block content %}
+    {% endblock %}
+</body>
+</html>

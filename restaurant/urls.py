@@ -1,5 +1,5 @@
 """
-URL configuration for cs412 project.
+URL configuration for restaurant project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.2/topics/http/urls/
@@ -15,16 +15,11 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
-from django.conf.urls.static import static
-from django.conf import settings
-
+from django.urls import path
+from . import views
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path('', include('quotes.urls')),
-    path('', include('restaurant.urls')), 
-] 
-
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('main/', views.main, name ='main'),
+    path('order/', views.order, name='order'),
+    path('confirmation/', views.confirmation, name='confirmation'),
+]

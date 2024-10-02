@@ -1,0 +1,20 @@
+{% extends 'restaurant/base.html' %}
+{% load static %}
+{% block title %}Main Page{% endblock %}
+
+{% block content %}
+<h2>Welcome to {{ restaurant_name }}</h2>
+<p>Location: {{ location }}</p>
+
+<h3>Hours of Operation</h3>
+<table>
+    {% for hour in hours %}
+    <tr>
+        <td>{{ hour.day }}</td>
+        <td>{{ hour.time }}</td>
+    </tr>
+    {% endfor %}
+</table>
+<img src="{% static 'restaurant/Pho-King.jpg' %}" alt="img of resturant">
+
+{% endblock %}
