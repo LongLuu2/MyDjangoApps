@@ -23,7 +23,8 @@ from django.conf import settings
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('', include('quotes.urls')),
-    path('', include('restaurant.urls')), 
+    path('', include('restaurant.urls')),
+    path('mini_fb', include('mini_fb.urls')) 
 ] 
 
 if settings.DEBUG:
