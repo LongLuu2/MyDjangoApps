@@ -10,6 +10,9 @@
 <body>
     <header>
         <h1>Mini Facebook</h1>
+        <nav>
+            <a href="{% url 'create_profile' %}">Create New Profile</a>
+        </nav>
     </header>
     <main>
         {% block content %}

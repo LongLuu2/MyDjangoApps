@@ -15,13 +15,20 @@
     {% for profile in profiles %}
     <tr class="profile-card">
         <td>
-            <img src="{{ profile.profile_image_url }}" alt="Profile image" class="profile-image">
+            <a href="{% url 'show_profile' profile.pk %}">
+                <img src="{{ profile.profile_image_url }}" alt="Profile image" class="profile-image">
+            </a>
         </td>
-        <td>{{ profile.first_name }}</td>
+        <td>
+            <a href="{% url 'show_profile' profile.pk %}">
+                {{ profile.first_name }}
+            </a>
+        </td>
         <td>{{ profile.last_name }}</td>
         <td>{{ profile.city }}</td>
         <td>{{ profile.email }}</td>
     </tr>
     {% endfor %}
 </table>
+
 {% endblock %}
