@@ -25,14 +25,24 @@
         <td>{{ profile.email }}</td>
     </tr>
 </table>
+
 <h3>Status Messages</h3>
 <ul>
     {% for status in profile.get_status_messages %}
-        <li>{{ status.timestamp }}: {{ status.message }}</li>
+        <li>
+            <p>{{ status.timestamp }}: {{ status.message }}
+                <a href="{% url 'update_status' status.pk %}">Update</a>
+                <a href="{% url 'delete_status' status.pk %}">Delete</a> 
+            </p>
+            {% for img in status.get_images %}
+            <img src="{{ img.image_file.url }}" alt="Image for {{ status.message }}" style="width: 100px; height: auto;">
+            {% endfor %}
+        </li>
     {% empty %}
         <li>No status messages.</li>
     {% endfor %}
 </ul>
+<a href="{% url 'update_profile' profile.pk %}">Update Profile</a><br>
 <a href="{% url 'create_status' profile.pk %}">Post a Status Message</a><br>
 <a href="/mini_fb">Return to all profiles</a>
 {% endblock %}
