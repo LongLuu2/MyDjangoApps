@@ -15,6 +15,37 @@ class Profile(models.Model):
     
     def get_status_messages(self):
         return self.status_messages.order_by('-timestamp')
+    
+    def get_friends(self):
+        friends_from_profile1 = Friend.objects.filter(profile1=self)
+        friends_from_profile2 = Friend.objects.filter(profile2=self)
+        
+        friends = []
+        for friend in friends_from_profile1:
+            friends.append(friend.profile2)  
+        for friend in friends_from_profile2:
+            friends.append(friend.profile1)  
+        return friends
+    def add_friend(self, other):
+        if self == other:
+            return
+
+        friendship_exists = Friend.objects.filter(
+            models.Q(profile1=self, profile2=other) | models.Q(profile1=other, profile2=self)
+        ).exists()
+
+        if not friendship_exists:
+            Friend.objects.create(profile1=self, profile2=other)
+
+    def get_friend_suggestions(self):
+        friends = self.get_friends()
+        all_profiles = Profile.objects.exclude(pk=self.pk).exclude(pk__in=[friend.pk for friend in friends])
+        return all_profiles
+    
+    def get_news_feed(self):
+        friends = self.get_friends()
+        profiles_to_include = [self] + friends
+        return StatusMessage.objects.filter(profile__in=profiles_to_include).order_by('-timestamp')
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
@@ -38,4 +69,11 @@ class Image(models.Model):
 
     def __str__(self):
         return self.image_file.name
-    
+
+class Friend(models.Model):
+    profile1 = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="profile1")
+    profile2 = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="profile2")
+    timestamp = models.DateTimeField(default=timezone.now)  
+
+    def __str__(self):
+        return f"{self.profile1.first_name} {self.profile1.last_name} & {self.profile2.first_name} {self.profile2.last_name}"

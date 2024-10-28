@@ -4,6 +4,7 @@
 
 {% block content %}
 <h2>{{ profile.first_name }} {{ profile.last_name }}'s Profile</h2>
+<a href="{% url 'update_profile' profile.pk %}">Update Profile</a><br>
 
 <img src="{{ profile.profile_image_url }}" alt="{{ profile.first_name }}" style="width: 200px; height: auto;">
 
@@ -27,22 +28,33 @@
 </table>
 
 <h3>Status Messages</h3>
+<a href="{% url 'create_status' profile.pk %}">Post a Status Message</a><br>
 <ul>
     {% for status in profile.get_status_messages %}
-        <li>
-            <p>{{ status.timestamp }}: {{ status.message }}
-                <a href="{% url 'update_status' status.pk %}">Update</a>
-                <a href="{% url 'delete_status' status.pk %}">Delete</a> 
-            </p>
-            {% for img in status.get_images %}
-            <img src="{{ img.image_file.url }}" alt="Image for {{ status.message }}" style="width: 100px; height: auto;">
-            {% endfor %}
-        </li>
+    <li>
+        <p>{{ status.timestamp }}: {{ status.message }}
+            <a href="{% url 'update_status' status.pk %}">Update</a>
+            <a href="{% url 'delete_status' status.pk %}">Delete</a> 
+        </p>
+        {% for img in status.get_images %}
+        <img src="{{ img.image_file.url }}" alt="Image for {{ status.message }}" style="width: 100px; height: auto;">
+        {% endfor %}
+    </li>
     {% empty %}
-        <li>No status messages.</li>
+    <li>No status messages.</li>
     {% endfor %}
 </ul>
-<a href="{% url 'update_profile' profile.pk %}">Update Profile</a><br>
-<a href="{% url 'create_status' profile.pk %}">Post a Status Message</a><br>
+<h3>Friends</h3>
+<a href="{% url 'friend_suggestions' profile.pk %}">Friend Suggestions</a>
+<ul>
+    {% for friend in profile.get_friends %}
+    <li>
+            <img src="{{ friend.profile_image_url }}" alt="{{ friend.first_name }}'s profile picture" style="width: 50px; height: 50px;">
+            <a href="{% url 'show_profile' friend.pk %}">{{ friend.first_name }} {{ friend.last_name }}</a></li>
+    {% empty %}
+        <li>No friends :C</li>
+    {% endfor %}
+</ul>
+<a href="{% url 'news_feed' profile.pk %}">View News Feed</a><br>
 <a href="/mini_fb">Return to all profiles</a>
 {% endblock %}
