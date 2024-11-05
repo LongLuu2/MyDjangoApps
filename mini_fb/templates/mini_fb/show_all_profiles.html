@@ -15,12 +15,12 @@
     {% for profile in profiles %}
     <tr class="profile-card">
         <td>
-            <a href="{% url 'show_profile' profile.pk %}">
+            <a href="{% url 'show_profile_with_pk' profile.pk %}">
                 <img src="{{ profile.profile_image_url }}" alt="Profile image" class="profile-image">
             </a>
         </td>
         <td>
-            <a href="{% url 'show_profile' profile.pk %}">
+            <a href="{% url 'show_profile_with_pk' profile.pk %}">
                 {{ profile.first_name }}
             </a>
         </td>

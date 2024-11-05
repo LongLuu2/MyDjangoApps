@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.urls import reverse
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Profile(models.Model):
@@ -9,6 +10,7 @@ class Profile(models.Model):
     city = models.CharField(max_length=50)
     email = models.EmailField(unique=True)
     profile_image_url = models.URLField(max_length=200)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="profile", null=True, blank=True)
     
     def get_absolute_url(self):
         return reverse('show_profile', kwargs={'pk': self.pk})

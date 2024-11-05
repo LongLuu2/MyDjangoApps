@@ -102,3 +102,21 @@ a {
 a:hover {
     text-decoration: underline;
 }
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-greeting {
+    margin: 0;
+}
+
+.logout-link,
+.profile-link,
+.login-link,
+.create-profile-link {
+    text-decoration: none;
+    margin-left: 10px;
+}

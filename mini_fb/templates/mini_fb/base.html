@@ -4,20 +4,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}My Application{% endblock %}</title>
+    <title>{% block title %}MiniFB{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
     <header>
         <h1>Mini Facebook</h1>
         <nav>
-            <a href="{% url 'create_profile' %}">Create New Profile</a>
+            <div class="user-info">
+                {% if user.is_authenticated %}
+                    <p class="user-greeting">Hello, {{ user.username }}!</p><br>
+                    <a href="{% url 'logout' %}" class="logout-link">Logout</a>
+                    <a href="{% url 'show_profile' %}" class="profile-link">My Profile</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="login-link">Login</a>
+                {% endif %}
+                <a href="{% url 'create_profile' %}" class="create-profile-link">Create New Profile</a>
+            </div>
         </nav>
     </header>
     <main>
         {% block content %}
         {% endblock %}
     </main>
-
 </body>
 </html>

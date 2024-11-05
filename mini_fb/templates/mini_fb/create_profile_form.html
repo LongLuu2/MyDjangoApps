@@ -1,15 +1,21 @@
-{% extends 'mini_fb/base.html' %}
+{% extends "mini_fb/base.html" %}
 
-{% block title %}Create New Profile{% endblock %}
+{% block title %}Create Profile{% endblock %}
 
 {% block content %}
 <h2>Create a New Profile</h2>
 
-<form method="POST">
+<form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ form.as_p }}
+    <h3>User Information</h3>
+    {{ user_form.as_p }}  
+    
+    <h3>Profile Information</h3>
+    {{ form.as_p }}  
+    
     <button type="submit">Create Profile</button>
 </form>
-
-<a href="/mini_fb">Back to All Profiles</a>
+<p>
+    <a href="{% url 'mini_fb' %}" class="button">Cancel</a> 
+</p>
 {% endblock %}

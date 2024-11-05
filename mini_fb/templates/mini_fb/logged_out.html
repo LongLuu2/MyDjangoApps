@@ -1,0 +1,9 @@
+{% extends "mini_fb/base.html" %}
+
+{% block title %}Logged Out{% endblock %}
+
+{% block content %}
+<h2>Your logged out.</h2>
+<p><a href="{% url 'login' %}">Log in again</a></p>
+<a href="{% url 'mini_fb' %}">Return to Home</a>
+{% endblock %}
