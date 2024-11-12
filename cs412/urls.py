@@ -24,7 +24,8 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path('', include('quotes.urls')),
     path('', include('restaurant.urls')),
-    path('mini_fb/', include('mini_fb.urls')) 
+    path('mini_fb/', include('mini_fb.urls')),
+     path('voter_analytics/', include('voter_analytics.urls'))
 ] 
 
 if settings.DEBUG:
