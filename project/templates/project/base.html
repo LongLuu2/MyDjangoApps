@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'project/styles.css' %}">
+    <title>GenkiVocab</title>
+</head>
+<header>
+    <h1>Genki Vocab</h1>
+    <nav>
+        <div class="header_div">
+            {% if user.is_authenticated %}
+            <p>{{ user.username }}</p>
+            <a href = "{% url 'my_study' %}">study sets</a>
+            <a href="{% url 'logout' %}" class="logout-link">Logout</a>
+            {% else %}
+            <a href="{% url 'login' %}" class="login-link">Login</a>
+            <a href="{% url 'register' %}">Create New Profile</a>
+            {% endif %}
+        </div>
+    </nav>
+</header>
+<body>
+    {% block content %}
+
+    {% endblock %}
+</body>
+</html>

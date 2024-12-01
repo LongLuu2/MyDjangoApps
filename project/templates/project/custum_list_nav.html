@@ -1,0 +1,8 @@
+<h3>(testing)Custom</h3>
+<ul>
+    {% for custom_list in custom_lists %}
+    <li><a href="{% url 'chapter_study' list_name=custom_list.list_name %}">{{ custom_list.list_name }}</a></li>
+    {% endfor %}
+</ul>
+<a href="{% url 'create_list' %}">+</a>
+

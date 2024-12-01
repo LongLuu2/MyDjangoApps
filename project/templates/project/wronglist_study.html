@@ -1,0 +1,35 @@
+{% extends "project/nav.html" %}
+
+{% block main_content %}
+<h1>Studying what you got wrong for {{ vocab_list.list_name }}
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" name="toggle">Switch</button>
+    </form>
+</h1>
+{% if display == "Japanese" %}
+<h3>{{ current_word.hiragana }} <br/> {{ current_word.kanji }}</h3>
+{% else %}
+<h3>{{ current_word.english_meaning }}</h3>
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+    {% if current_word %}
+    <input type="text" name="user_answer">
+    <button type="submit">Submit</button>
+    {% else %}
+    {% if vocab_list.vocabulary_words.exists %}
+    <button type="submit">Restart</button>
+    {% else %}
+    <p>No more words left!</p>
+    <button type="submit">Done</button>
+    {% endif %}
+    {% endif %}
+</form>
+
+{% if feedback %}
+<p>{{ feedback }}</p>
+{% endif %}
+<a href="{% url 'chapter_study' list_name=wrong_list.vocabulary_list.list_name %}">Back to Study</a>
+{% endblock main_content %}

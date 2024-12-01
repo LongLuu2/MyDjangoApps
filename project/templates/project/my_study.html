@@ -1,0 +1,23 @@
+{% extends "project/base.html" %}
+
+{% block content %}
+{% if request.user.is_authenticated %}
+<div class="flex-container">
+    <div class="sideBar" style ="width: 300px; height: 100%;">
+        <nav>
+            <li><a href="{% url 'chapters_nav' %}">Chapters</a></li>
+            <li><a href="{% url 'custom_nav'%}">Custom Lists</a></li>
+        </nav>
+        {% block nav_content %}
+        
+        {% endblock nav_content %}
+    </div>
+    <div>
+        {% block main_content %}
+        <p>testing</p>
+        {% endblock main_content %}
+    </div>
+</div>
+
+{% endif %}
+{% endblock %}

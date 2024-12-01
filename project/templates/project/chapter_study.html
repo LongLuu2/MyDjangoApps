@@ -1,0 +1,31 @@
+{% extends "project/nav.html" %}
+
+{% block main_content %}
+<h1>Studying {{ vocab_list.list_name }}
+    <a href="{% url 'wronglist_list' list_name=vocab_list.list_name %}">Study Missed words</a>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" name="toggle">Switch</button>
+    </form>
+</h1>
+{% if display == "Japanese" %}
+<h3>{{ current_word.hiragana }} <br/> {{ current_word.kanji }}</h3>
+{% else %}
+<h3>{{ current_word.english_meaning }}</h3>
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+    {% if current_word %}
+    <input type="text" name="user_answer">
+    <button type="submit">Submit</button>
+    {% else %}
+    <button type="submit">Restart</button>
+    {% endif %}
+</form>
+
+{% if feedback %}
+<p>{{ feedback }}</p>
+{% endif %}
+
+{% endblock main_content %}

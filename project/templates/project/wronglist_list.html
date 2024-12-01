@@ -1,0 +1,22 @@
+{% extends "project/nav.html" %}
+
+{% block main_content %}
+<h2>Wrong Lists for {{ vocab_list.list_name }}</h2>
+
+{% if wrong_lists %}
+    <ul>
+        {% for wrong_list in wrong_lists %}
+            <li>
+                <a href="{% url 'wronglist_study' wronglist_id=wrong_list.id %}">
+                    Wrong List #{{ wrong_list.list_number }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Complete the study set and if you get any wrong, a list will apear here!</p>
+{% endif %}
+
+<p><a href="{% url 'chapter_study' list_name=vocab_list.list_name %}">Back</a></p>
+
+{% endblock main_content %}

@@ -1,0 +1,9 @@
+{% extends "project/my_study.html" %}
+
+{% block nav_content %}
+    {% if nav_type == "chapters" %}
+        {% include "project/chapter_nav.html" %}
+    {% elif nav_type == "custom" %}
+        {% include "project/custum_list_nav.html" %}
+    {% endif %}
+{% endblock nav_content%}

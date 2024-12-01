@@ -1,0 +1,8 @@
+<h3>(testing)Chapters</h3>
+<ul>
+    {% for chapter in chapters %}
+    <li><a href="{% url 'chapter_study' list_name=chapter.list_name %}">{{ chapter.list_name }}</a></li>
+    {% endfor %}
+</ul>
+
+

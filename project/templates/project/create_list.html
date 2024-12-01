@@ -1,0 +1,29 @@
+{% extends "project/nav.html" %}
+
+{% block main_content%}
+<h2>Create a Custom List</h2>
+
+<form method="get">
+    <input type="text" name="search" placeholder="Search..." value="{{ request.GET.search }}">
+    <select name="chapter">
+        {% for value, label in form.fields.chapter.widget.choices %}
+            <option value="{{ value }}" {% if value == request.GET.chapter %}selected{% endif %}>
+                {{ label }}
+            </option>
+        {% endfor %}
+    </select>
+    <button type="submit">Filter</button>
+</form>
+
+<form method="post">
+    {% csrf_token %}
+    <label for="list_name">List Name:</label> {{ form.list_name }}
+    <div style="max-height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;">
+        <h3>Select Words:</h3>
+        {{ form.vocabulary_words }}
+    </div>
+    <button type="submit">Create List</button>
+</form>
+
+<p><a href="{% url 'custom_nav' %}">cancel</a></p>
+{% endblock main_content%}
