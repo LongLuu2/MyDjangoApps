@@ -5,6 +5,7 @@
     <h1>
         Studying {{ vocab_list.list_name }}
         <a href="{% url 'wronglist_list' list_name=vocab_list.list_name %}" class="missed-words-link">Study Missed Words</a>
+        <a href="{% url 'custom_list_update' list_name=vocab_list.list_name %}" class="missed-words-link"> Update List</a>
     </h1>
 
     <form method="post">

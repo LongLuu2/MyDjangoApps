@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import home, RegistrationView, MyStudyView, ChapterStudyView, ChaptersNavView, CustomNavView, ListCreateView, WrongListStudyView, WrongListListView
+from .views import home, RegistrationView, MyStudyView, ChapterStudyView, ChaptersNavView, CustomNavView, ListCreateView, WrongListStudyView, WrongListListView,VocabListDeleteView,VocabListUpdateView
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
@@ -14,5 +14,7 @@ path('custom/', CustomNavView.as_view(), name='custom_nav'),
 path('create_list/', ListCreateView.as_view(), name='create_list'),
 path('wronglist_study/<int:wronglist_id>/', WrongListStudyView.as_view(), name='wronglist_study'),
 path('wronglists/<str:list_name>/', WrongListListView.as_view(), name='wronglist_list'),
+path('custom_list/update/<str:list_name>/', VocabListUpdateView.as_view(), name='custom_list_update'),
+path('custom_list/delete/<str:list_name>/', VocabListDeleteView.as_view(), name='custom_list_delete')
 ]
 

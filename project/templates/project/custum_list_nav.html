@@ -1,12 +1,18 @@
 
 <div class="scrollable-list">
-        <h3>Custom</h3>
-        
-        <a href="{% url 'create_list' %}" style="color: orange;">Add New List</a>
-        <ul>
-            {% for custom_list in custom_lists %}
-            <li><a href="{% url 'chapter_study' list_name=custom_list.list_name %}">{{ custom_list.list_name }}</a></li>
-            {% endfor %}
-        </ul>
-    </div>
+    <h3>Custom</h3>
+    
+    <a href="{% url 'create_list' %}" style="color: orange;">Add New List</a>
+    <ul>
+        {% for custom_list in custom_lists %}
+            <li>
+                <a href="{% url 'chapter_study' list_name=custom_list.list_name %}">{{ custom_list.list_name }}</a>
+                <form method="post" action="{% url 'custom_list_delete' list_name=custom_list.list_name %}" style="display: inline;">
+                    {% csrf_token %}
+                    <a href="{% url 'custom_list_delete' list_name=custom_list.list_name %}" style="color: red;">Delete</a>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
     

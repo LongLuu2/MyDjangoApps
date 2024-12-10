@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import CreateView, TemplateView, FormView, DetailView, ListView
+from django.views.generic import CreateView, TemplateView, FormView, DetailView, ListView, DeleteView, UpdateView
 from django.contrib.auth.forms import UserCreationForm
 from django.db.models import Q
 from django.contrib.auth import login 
@@ -70,6 +70,7 @@ class ChapterStudyView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["update_url"] = reverse_lazy("custom_list_update", kwargs={"list_name": self.object.list_name})
         list_name = self.object.list_name
 
         if list_name.startswith("Chapter"):
@@ -247,7 +248,7 @@ class WrongListStudyView(DetailView):
             # Check user answer
             if user_answer in correct_answers:
                 request.session[f"wrong_feedback_{wrong_list.id}"] = "Correct!"
-                wrong_list.vocabulary_words.remove(current_word)  # Remove only the correct word
+                wrong_list.vocabulary_words.remove(current_word)  
             else:
                 request.session[f"wrong_feedback_{wrong_list.id}"] = f"Incorrect! The answer for {prompt} is: {' or '.join(correct_answers)}"
 
@@ -255,7 +256,7 @@ class WrongListStudyView(DetailView):
             request.session[f"wrong_index_{wrong_list.id}"] = index + 1
         else:
             # Reset index if we've gone through all words
-            if wrong_list.vocabulary_words.exists():  # If there are still words left
+            if wrong_list.vocabulary_words.exists(): 
                 request.session[f"wrong_index_{wrong_list.id}"] = 0
             else:
                 # Delete the wrong list if it's empty
@@ -291,3 +292,53 @@ class WrongListListView(ListView):
             ).exclude(list_name__startswith="Chapter")
         return context
     
+class VocabListDeleteView(DeleteView):
+    model = VocabList
+    template_name = 'project/vocablist_confirm_delete.html'
+
+    def get_object(self):
+        return get_object_or_404(VocabList, list_name=self.kwargs.get("list_name"), user=self.request.user)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["list_name"] = self.kwargs.get("list_name")  
+        return context
+
+    def get_success_url(self):
+        return reverse_lazy('custom_nav')
+    
+class VocabListUpdateView(UpdateView):
+    model = VocabList
+    form_class = CustomListForm  
+    template_name = 'project/vocablist_update.html'
+
+    def get_object(self):
+        return get_object_or_404(VocabList, list_name=self.kwargs.get("list_name"), user=self.request.user)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        query = self.request.GET.get('search', '').strip()
+        chapter_filter = self.request.GET.get('chapter', '').strip()
+
+
+        allWords = VocabWord.objects.all()
+        if chapter_filter:
+            allWords = allWords.filter(lesson_num=chapter_filter)
+        if query:
+            allWords = allWords.filter(
+                Q(hiragana__icontains=query) |
+                Q(kanji__icontains=query) |
+                Q(english_meaning__icontains=query)
+            )
+
+        context['vocab_words'] = allWords
+        return context
+
+    def get_success_url(self):
+        return reverse_lazy('custom_nav')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        response = super().form_valid(form)
+        form.instance.vocabulary_words.set(form.cleaned_data['vocabulary_words'])
+        return response
