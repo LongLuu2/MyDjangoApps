@@ -1,31 +1,40 @@
 {% extends "project/nav.html" %}
 
 {% block main_content %}
-<h1>Studying {{ vocab_list.list_name }}
-    <a href="{% url 'wronglist_list' list_name=vocab_list.list_name %}">Study Missed words</a>
+<div class="study-container">
+    <h1>
+        Studying {{ vocab_list.list_name }}
+        <a href="{% url 'wronglist_list' list_name=vocab_list.list_name %}" class="missed-words-link">Study Missed Words</a>
+    </h1>
+
     <form method="post">
         {% csrf_token %}
         <button type="submit" name="toggle">Switch</button>
     </form>
-</h1>
-{% if display == "Japanese" %}
-<h3>{{ current_word.hiragana }} <br/> {{ current_word.kanji }}</h3>
-{% else %}
-<h3>{{ current_word.english_meaning }}</h3>
-{% endif %}
 
-<form method="post">
-    {% csrf_token %}
-    {% if current_word %}
-    <input type="text" name="user_answer">
-    <button type="submit">Submit</button>
+    {% if display == "Japanese" %}
+    <h3>
+        {{ current_word.hiragana }} <br/> {{ current_word.kanji }}
+    </h3>
     {% else %}
-    <button type="submit">Restart</button>
+    <h3>
+        {{ current_word.english_meaning }}
+    </h3>
     {% endif %}
-</form>
 
-{% if feedback %}
-<p>{{ feedback }}</p>
-{% endif %}
+    <form method="post">
+        {% csrf_token %}
+        {% if current_word %}
+        <input type="text" name="user_answer">
+        <button type="submit">Submit</button>
+        {% else %}
+        <button type="submit">Restart</button>
+        {% endif %}
+    </form>
 
+    {% if feedback %}
+    <p class="feedback-message">{{ feedback }}</p>
+    {% endif %}
+</div>
+    
 {% endblock main_content %}

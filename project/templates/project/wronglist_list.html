@@ -1,22 +1,25 @@
 {% extends "project/nav.html" %}
 
 {% block main_content %}
+
 <h2>Wrong Lists for {{ vocab_list.list_name }}</h2>
+<p><a href="{% url 'chapter_study' list_name=vocab_list.list_name %}" class="return-button">Back</a></p>
 
 {% if wrong_lists %}
+<div class="scrollable-list" style="display: inline-block;">
     <ul>
         {% for wrong_list in wrong_lists %}
-            <li>
-                <a href="{% url 'wronglist_study' wronglist_id=wrong_list.id %}">
-                    Wrong List #{{ wrong_list.list_number }}
-                </a>
-            </li>
+        <li>
+            <a href="{% url 'wronglist_study' wronglist_id=wrong_list.id %}">
+                Wrong List #{{ wrong_list.list_number }}
+            </a>
+        </li>
         {% endfor %}
     </ul>
-{% else %}
+</div>
+    {% else %}
     <p>Complete the study set and if you get any wrong, a list will apear here!</p>
-{% endif %}
+    {% endif %}
 
-<p><a href="{% url 'chapter_study' list_name=vocab_list.list_name %}">Back</a></p>
 
 {% endblock main_content %}

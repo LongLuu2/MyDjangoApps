@@ -3,12 +3,15 @@
 {% block tittle %} Create Account {% endblock %}
 
 {% block content %} 
-<h1>Create a new Account</h1>
+<div class="account">
 
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form }}
-    <button type="submit">Create Account</button>
-</form><br>
-<a href="{% url 'project' %}">Back</a>
+    <h1>Create a new Account</h1>
+    
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit">Create Account</button>
+    </form><br>
+    <a href="{% url 'project' %}">Back</a>
+</div>
 {% endblock %}

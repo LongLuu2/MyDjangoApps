@@ -219,10 +219,11 @@ class WrongListStudyView(DetailView):
 
     def post(self, request, *args, **kwargs):
         wrong_list = self.get_object()
-        all_words = wrong_list.vocabulary_words.all()
+        all_words = list(wrong_list.vocabulary_words.all())  # Fetch words as a list for consistent indexing
         index = request.session.get(f"wrong_index_{wrong_list.id}", 0)
 
         if "toggle" in request.POST:
+            # Toggle between Japanese and English display mode
             mode = request.session.get(f"wrong_display_{wrong_list.id}", "Japanese")
             request.session[f"wrong_display_{wrong_list.id}"] = "English" if mode == "Japanese" else "Japanese"
             return redirect(request.path)
@@ -232,6 +233,7 @@ class WrongListStudyView(DetailView):
             user_answer = request.POST.get("user_answer", "").strip().lower()
             current_display = request.session.get(f"wrong_display_{wrong_list.id}", "Japanese")
 
+            # Determine correct answers and the prompt
             correct_answers = []
             if current_display == "Japanese":
                 correct_answers.append(current_word.english_meaning.strip().lower().replace("...", ""))
@@ -242,18 +244,26 @@ class WrongListStudyView(DetailView):
                     correct_answers.append(current_word.kanji.replace("〜", ""))
                 prompt = current_word.english_meaning
 
+            # Check user answer
             if user_answer in correct_answers:
                 request.session[f"wrong_feedback_{wrong_list.id}"] = "Correct!"
-                wrong_list.vocabulary_words.remove(current_word)
+                wrong_list.vocabulary_words.remove(current_word)  # Remove only the correct word
             else:
                 request.session[f"wrong_feedback_{wrong_list.id}"] = f"Incorrect! The answer for {prompt} is: {' or '.join(correct_answers)}"
 
+            # Move to the next index
             request.session[f"wrong_index_{wrong_list.id}"] = index + 1
         else:
+            # Reset index if we've gone through all words
+            if wrong_list.vocabulary_words.exists():  # If there are still words left
+                request.session[f"wrong_index_{wrong_list.id}"] = 0
+            else:
+                # Delete the wrong list if it's empty
                 wrong_list.delete()
                 return redirect('chapter_study', list_name=wrong_list.vocabulary_list.list_name)
 
         return redirect(request.path)
+
 
 class WrongListListView(ListView):
     model = WrongList
