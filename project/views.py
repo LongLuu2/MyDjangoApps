@@ -72,9 +72,9 @@ class ChapterStudyView(DetailView):
     context_object_name = "vocab_list"
 
     def get_object(self):
-        # fetch the vocab list based on the list name
+        # get the vocab list based on the list name
         list_name = self.kwargs.get("list_name")
-        return VocabList.objects.get(list_name=list_name)
+        return get_object_or_404(VocabList, list_name=list_name, user=self.request.user)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
