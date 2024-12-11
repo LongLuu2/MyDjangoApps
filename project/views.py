@@ -215,12 +215,13 @@ class WrongListStudyView(DetailView):
 
         context["feedback"] = self.request.session.pop(f"wrong_feedback_{wrong_list.id}", None)
         context["display"] = self.request.session.get(f"wrong_display_{wrong_list.id}", "Japanese")
+        context['has_words'] = wrong_list.vocabulary_words.exists()
         
         return context
 
     def post(self, request, *args, **kwargs):
         wrong_list = self.get_object()
-        all_words = list(wrong_list.vocabulary_words.all())  # Fetch words as a list for consistent indexing
+        all_words = list(wrong_list.vocabulary_words.all())  
         index = request.session.get(f"wrong_index_{wrong_list.id}", 0)
 
         if "toggle" in request.POST:

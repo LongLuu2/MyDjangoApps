@@ -17,15 +17,15 @@
 <form method="post">
     {% csrf_token %}
     {% if current_word %}
-    <input type="text" name="user_answer">
-    <button type="submit">Submit</button>
+        <input type="text" name="user_answer">
+        <button type="submit">Submit</button>
     {% else %}
-    {% if vocab_list.vocabulary_words.exists %}
-    <button type="submit">Restart</button>
-    {% else %}
-    <p>No more words left!</p>
-    <button type="submit">Done</button>
-    {% endif %}
+        {% if has_words %}
+            <button type="submit">Restart</button>
+        {% else %}
+            <p>No more words left!</p>
+            <button type="submit">Done</button>
+        {% endif %}
     {% endif %}
 </form>
 
