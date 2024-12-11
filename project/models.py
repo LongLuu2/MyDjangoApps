@@ -48,8 +48,9 @@ class VocabList(models.Model):
     
     #list names are unique relative to the users and not globally
     class Meta:
-        unique_together = ('list_name', 'user')
-        
+        constraints = [
+            models.UniqueConstraint(fields=['list_name', 'user'], name='unique_list_name')
+        ]
     def __str__(self):
         return f"{self.list_name}" 
     
